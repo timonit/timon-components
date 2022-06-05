@@ -1,18 +1,47 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
-  </div>
+  <app-grid>
+    <app-card label="dropdown">
+      <tc-dropdown class="dr" v-model="name" placeholder="timon">
+        <span
+          v-for="name of names"
+          :key="name"
+          @click="pick(name)"
+          @keydown="undefined"
+        >{{ name }}</span>
+      </tc-dropdown>
+    </app-card>
+  </app-grid>
 </template>
 
-<script lang="ts">
-import { Options, Vue } from 'vue-class-component';
-import HelloWorld from '@/components/HelloWorld.vue'; // @ is an alias to /src
+<script lang='ts'>
+import AppCard from '@/components/app/app-card.vue'; // @ is an alias to /src
+import AppGrid from '@/components/app/app-grid.vue';
+import tcDropdown from '@/components/tc-dropdown.vue';
+import { defineComponent } from 'vue';
 
-@Options({
+export default defineComponent({
   components: {
-    HelloWorld,
+    AppCard,
+    AppGrid,
+    tcDropdown,
   },
-})
-export default class HomeView extends Vue {}
+  data() {
+    return {
+      names: ['asd', 'dsa', 'ddd', 'aaa'],
+      name: 'asd',
+    };
+  },
+  methods: {
+    pick(name: string) {
+      this.name = name;
+    },
+  },
+});
 </script>
+
+<style lang="scss" scope>
+span {
+  padding: 0 5px;
+  cursor: pointer;
+}
+</style>
